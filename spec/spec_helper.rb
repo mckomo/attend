@@ -1,5 +1,6 @@
-require "bundler/setup"
-require "attend"
+# frozen_string_literal: true
+
+require 'bundler/setup'
 
 RSpec.configure do |config|
   # Disable RSpec exposing methods globally on `Module` and `main`
