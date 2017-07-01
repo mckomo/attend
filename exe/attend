@@ -11,8 +11,9 @@ EMPLOYEE_EMAIL = 'maciej.komorowski@codete.com'
 parse_date = lambda { |v| Date.parse(v) }
 
 Clamp do
-  option '--check_in', 'CHECK_IN', 'check in time'
-  option '--check_out', 'CHECK_OUT', 'check out time'
+  option '--email', 'EMAIL', 'employee email id', required: true
+  option '--check_in', 'CHECK_IN', 'check in time', required: true
+  option '--check_out', 'CHECK_OUT', 'check out time', required: true
   option '--from', 'FROM', 'date of the first work day', default: Date.today, &parse_date
   option '--to', 'TO', 'date of the las work day', default: Date.today, &parse_date
   option '--dry', :flag, 'enables dry run'
@@ -40,13 +41,13 @@ Clamp do
       'dateFormat' => DATE_FORMAT,
       'checkIn' => check_in_time.strftime('%d/%m/%Y %H:%M:%S'),
       'checkOut' => check_out_time.strftime('%d/%m/%Y %H:%M:%S'),
-      'emailId' => 'maciej.komorowski@codete.com',
+      'emailId' => email,
     }
 
     if dry?
-      puts "DRY RUN: Commiting attandance from #{check_in_time} to #{check_out_time}"
+      puts "DRY RUN: Committing attendance from #{check_in_time} to #{check_out_time} for #{email}"
     else
-      HTTParty.post('https://people.zoho.com/people/api/attendance', query: parameters)
+      # HTTParty.post('https://people.zoho.com/people/api/attendance', query: parameters)
     end
   end
 end
