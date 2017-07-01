@@ -11,9 +11,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Maciej Komorowski']
   spec.email         = ['mckomo@gmail.com']
 
-  spec.summary       = 'Programatic tool for management Zoho Poeople attendance'
-  spec.description   = 'Attend is command line tool that will help you ' \
-  'register your Zoho Poeople attendance'
+  spec.summary       = 'Register Zoho Poeople attendance using CLI'
+  spec.description   = 'Attend is command line tool that will help you register your Zoho Poeople attendance in fast and easy way'
   spec.homepage      = 'https://github.com/mckomo/attend'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
@@ -23,8 +22,10 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'httparty', '~ 0.15.5'
+  spec.add_dependency 'clamp', '~> 1.1.2'
+
   spec.add_development_dependency 'bundler', '~> 1.15'
-  spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 0.49.1'
 end

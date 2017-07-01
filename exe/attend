@@ -6,9 +6,8 @@ require 'httparty'
 
 AUTH_TOKEN = ENV['ZOHO_PEOPLE_AUTH_TOKEN']
 DATE_FORMAT = 'dd/MM/yyyy HH:mm:ss'
-EMPLOYEE_EMAIL = 'maciej.komorowski@codete.com'
 
-parse_date = lambda { |v| Date.parse(v) }
+parse_date = ->(v) { Date.parse(v) }
 
 Clamp do
   option '--email', 'EMAIL', 'employee email id', required: true
@@ -25,12 +24,17 @@ Clamp do
       check_in_time = date_time.new_offset("+#{check_in}")
       check_out_time = date_time.new_offset("+#{check_out}")
 
+      if dry?
+        puts "DRY RUN: Committing attendance from #{check_in_time} to #{check_out_time}"
+        next
+      end
+
       response = post_attendance(check_in_time, check_out_time)
 
-      if response && response.ok?
-        puts "Succesfully commited attendance from #{check_in_time} to #{check_out_time}"
+      if response.ok?
+        puts "Successfully registered attendance from #{check_in_time} to #{check_out_time}"
       elsif response
-        raise "Failed to commit attendance. Error: #{response.body}"
+        raise "Failed to register attendance. Error: #{response.body}"
       end
     end
   end
@@ -44,11 +48,7 @@ Clamp do
       'emailId' => email,
     }
 
-    if dry?
-      puts "DRY RUN: Committing attendance from #{check_in_time} to #{check_out_time} for #{email}"
-    else
-      # HTTParty.post('https://people.zoho.com/people/api/attendance', query: parameters)
-    end
+    HTTParty.post('https://people.zoho.com/people/api/attendance', query: parameters)
   end
 end
 
