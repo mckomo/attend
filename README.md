@@ -7,7 +7,7 @@ Register your attendance at Zoho using CLI.
 Install `attend` Ruby gem:
 
 ```bash
-gem install 
+gem install attend
 ```
 
 and that's it!
