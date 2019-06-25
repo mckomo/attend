@@ -1,4 +1,4 @@
-# Attend
+# Attend [![Build Status](https://travis-ci.org/SponsorPay/stack-retrace.svg?branch=master)](https://travis-ci.org/SponsorPay/stack-retrace)
 
 Register your attendance at Zoho using CLI.
 
