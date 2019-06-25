@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'clamp', '~> 1.3'
-  spec.add_dependency 'httparty', '~> 0.17'
+  spec.add_dependency 'http', '~> 4.1'
 
   spec.add_development_dependency 'bundler', '~> 1.17'
   spec.add_development_dependency 'rspec', '~> 3.8'

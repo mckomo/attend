@@ -1,54 +1,22 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'clamp'
 require 'date'
-require 'httparty'
 
-AUTH_TOKEN = ENV['ZOHO_PEOPLE_AUTH_TOKEN']
-DATE_FORMAT = 'dd/MM/yyyy HH:mm:ss'
+require_relative '../lib/attend'
 
-parse_date = ->(v) { Date.parse(v) }
+parse_date = Date.method(:parse)
 
 Clamp do
   option '--email', 'EMAIL', 'employee email id', required: true
-  option '--check_in', 'CHECK_IN', 'check in time', required: true
-  option '--check_out', 'CHECK_OUT', 'check out time', required: true
+  option '--check_in', 'CHECK_IN', 'check in time', default: '9:00'
+  option '--check_out', 'CHECK_OUT', 'check out time', default: '17:00'
   option '--from', 'FROM', 'date of the first work day', default: Date.today, &parse_date
   option '--to', 'TO', 'date of the las work day', default: Date.today, &parse_date
   option '--dry', :flag, 'enables dry run'
 
   def execute
-    days_between = from.step(to).reject(&:sunday?).reject(&:saturday?)
-
-    days_between.map(&:to_datetime).each do |date_time|
-      check_in_time = date_time.new_offset("+#{check_in}")
-      check_out_time = date_time.new_offset("+#{check_out}")
-
-      if dry?
-        puts "DRY RUN: Committing attendance from #{check_in_time} to #{check_out_time}"
-        next
-      end
-
-      response = post_attendance(check_in_time, check_out_time)
-
-      if response.ok?
-        puts "Successfully registered attendance from #{check_in_time} to #{check_out_time}"
-      elsif response
-        raise "Failed to register attendance. Error: #{response.body}"
-      end
-    end
-  end
-
-  def post_attendance(check_in_time, check_out_time)
-    parameters = {
-      'authtoken' => AUTH_TOKEN,
-      'dateFormat' => DATE_FORMAT,
-      'checkIn' => check_in_time.strftime('%d/%m/%Y %H:%M:%S'),
-      'checkOut' => check_out_time.strftime('%d/%m/%Y %H:%M:%S'),
-      'emailId' => email,
-    }
-
-    HTTParty.post('https://people.zoho.com/people/api/attendance', query: parameters)
+    Attend.register(email: email, from: from, to: to, check_in: check_in, check_out: check_out, dry_run: dry?)
   end
 end
-

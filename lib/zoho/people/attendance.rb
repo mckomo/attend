@@ -3,14 +3,25 @@
 module Zoho
   module People
     class Attendance
-      DATE_FORMAT = 'dd/MM/yyyy HH:mm:ss'
+      attr_reader :check_in, :check_out, :email
 
-      attr_reader :check_in, :check_out, :email_id
+      def initialize(email:, check_in:, check_out:)
+        raise ArgumentError, 'check_in must be DateTime instance' unless check_in.is_a?(DateTime)
+        raise ArgumentError, 'check_out must be DateTime instance' unless check_out.is_a?(DateTime)
 
-      def initialize(check_in:, check_out:, email_id:)
+        @email = email
         @check_in = check_in
         @check_out = check_out
-        @email_id = email_id
+      end
+
+      def to_s
+        "attendance from #{format(check_in)} to #{format(check_out)}"
+      end
+
+      private
+
+      def format(datetime)
+        datetime.strftime('%F@%H:%M')
       end
     end
   end
