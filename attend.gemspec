@@ -11,8 +11,10 @@ Gem::Specification.new do |spec|
   spec.email         = ['mckomo@gmail.com']
   spec.license       = 'MIT'
 
-  spec.summary       = 'Register Zoho Poeople attendance using CLI'
-  spec.description   = 'Attend is command line tool that will help you register your Zoho Poeople attendance in fast and easy way'
+  spec.required_ruby_version = '>= 2.6'
+
+  spec.summary       = 'Register Zoho People attendance using CLI'
+  spec.description   = 'Attend is CLI tool that will help you register your Zoho People attendance in fast and easy way'
   spec.homepage      = 'https://github.com/mckomo/attend'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
@@ -23,9 +25,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'clamp', '~> 1.3'
-  spec.add_dependency 'http', '~> 4.1'
+  spec.add_dependency 'http', '~> 4.4'
 
-  spec.add_development_dependency 'bundler', '~> 1.17'
-  spec.add_development_dependency 'rspec', '~> 3.8'
-  spec.add_development_dependency 'rubocop', '~> 0.71.0'
+  spec.add_development_dependency 'bundler', '~> 2.1'
+  spec.add_development_dependency 'rspec', '~> 3.9'
+  spec.add_development_dependency 'rubocop', '~> 0.91'
 end

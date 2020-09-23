@@ -1,4 +1,7 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 2.7
 Documentation:
   Enabled: false
-Metrics/LineLength:
-  Max: 100
+Layout/LineLength:
+  Max: 120

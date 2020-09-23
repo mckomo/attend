@@ -46,7 +46,7 @@ module Zoho
       private
 
       def request(method, endpoint, options)
-        response = Http.method(method).call("#{URL}/#{endpoint}", options)
+        response = HTTP.method(method).call("#{URL}/#{endpoint}", options)
 
         if response.status.success?
           response.parse
