@@ -7,12 +7,8 @@ require_relative './attend/get_absent_days'
 require_relative './attend/register_attendances'
 
 module Attend
-  ZOHO_API = Zoho::People::API.new
-
-  private_constant :ZOHO_API
-
   def self.register(email:, from:, to:, check_in:, check_out:, dry_run: true)
-    absent_days = GetAbsentDays.new(zoho: ZOHO_API).call(email: email, from: from, to: to)
+    absent_days = GetAbsentDays.new(zoho: zoho_api).call(email: email, from: from, to: to)
 
     if absent_days.empty?
       puts "No absent days between #{from} and #{to}"
@@ -27,6 +23,12 @@ module Attend
                                    check_out: day_beginning.new_offset("+#{check_out}"))
     end
 
-    RegisterAttendances.new(zoho: ZOHO_API, dry_run: dry_run).call(attendances)
+    RegisterAttendances.new(zoho: zoho_api, dry_run: dry_run).call(attendances)
   end
+
+  def self.zoho_api
+    Zoho::People::API.new
+  end
+
+  private_class_method :zoho_api
 end
