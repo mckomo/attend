@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['mckomo@gmail.com']
   spec.license       = 'MIT'
 
-  spec.required_ruby_version = '>= 2.6'
+  spec.required_ruby_version = '>= 2.7.2'
 
   spec.summary       = 'Register Zoho People attendance using CLI'
   spec.description   = 'Attend is CLI tool that will help you register your Zoho People attendance in fast and easy way'
@@ -29,5 +29,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 2.1'
   spec.add_development_dependency 'rspec', '~> 3.9'
-  spec.add_development_dependency 'rubocop', '~> 0.91'
+  spec.add_development_dependency 'rubocop', '~> 1.11'
 end
