@@ -15,8 +15,17 @@ Clamp do
   option '--from', 'FROM', 'date of the first work day', default: Date.today, &parse_date
   option '--to', 'TO', 'date of the las work day', default: Date.today, &parse_date
   option '--dry', :flag, 'enables dry run'
+  option '--verbose', :flag, 'print verbose error message'
 
   def execute
     Attend.register(email: email, from: from, to: to, check_in: check_in, check_out: check_out, dry_run: dry?)
+  rescue StandardError => e
+    if verbose?
+      puts e.full_message
+    else
+      puts e.message
+    end
+
+    exit 1
   end
 end
