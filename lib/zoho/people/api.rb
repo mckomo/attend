@@ -11,8 +11,8 @@ module Zoho
 
       attr_reader :auth_token
 
-      def initialize(auth_token: ENV['ZOHO_PEOPLE_AUTH_TOKEN'])
-        raise 'You must provide Zoho People authentication token' unless auth_token
+      def initialize(auth_token: ENV['ZOHO_PEOPLE_ROOT_TOKEN'])
+        raise 'You must provide Zoho People authorization token' unless auth_token
 
         @auth_token = auth_token
       end
